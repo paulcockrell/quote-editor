@@ -69,8 +69,8 @@ jobs:
           path: tmp/capybara/
 
   deploy_dev:
-    needs: [build_and_test]
     if: github.ref == 'refs/heads/test'
+    needs: [build_and_test]
     runs-on: ubuntu-latest
     concurrency: dev
     steps:
@@ -90,11 +90,11 @@ jobs:
 
       - name: "Deploy dev"
         run: |
-          echo: "Prettend deploy to DEV"
+          echo "Prettend deploy to DEVELOPMENT"
 
   deploy_staging:
-    needs: [build_and_test]
     if: github.ref == 'refs/heads/test'
+    needs: [build_and_test]
     runs-on: ubuntu-latest
     concurrency: staging
     steps:
@@ -114,10 +114,11 @@ jobs:
 
       - name: "Deploy staging"
         run: |
-          echo: "Prettend deploy to STAGING"
+          echo "Prettend deploy to STAGING"
 
   deploy_production:
     if: github.ref == 'refs/heads/main'
+    needs: [build_and_test]
     runs-on: ubuntu-latest
     concurrency: production
     steps:
@@ -137,4 +138,4 @@ jobs:
 
       - name: "Deploy production"
         run: |
-          echo: "Prettend deploy to PRODUCTION"
+          echo "Prettend deploy to PRODUCTION"
