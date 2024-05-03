@@ -60,9 +60,9 @@ jobs:
           gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)"
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
-          bundle exec rake db:schema:load --trace
-          bundle exec rake db:migrate
-          bundle exec rspec spec/ --tag '~skip_ci' --format RspecJunitFormatter --out rspec.xml --format progress
+          bin/rails db:schema:load --trace
+          bin/rails db:migrate
+          bin/rails test
 
       - name: Capybara failure
         uses: actions/upload-artifact@v4
