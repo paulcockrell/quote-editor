@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_and_test:
-    uses: paulcockrell/quote-editor/.github/workflows/build_and_test.yml
+    uses: paulcockrell/quote-editor/.github/workflows/build_and_test.yml@test
 
   deploy_dev:
     needs: [build_and_test]
