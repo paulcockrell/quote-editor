@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  build_and_test:
+    uses: paulcockrell/quote_editor/.github/workflows/build_and_test.yml@main
+
+  deploy_dev:
+    needs: [build_and_test]
+
+    runs-on: ubuntu-latest
+    concurrency: dev
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.0
+
+      - name: "Deploy dev"
+        run: |
+          echo "Prettend deploy to DEVELOPMENT"
+
+  deploy_staging:
+    needs: [build_and_test]
+    runs-on: ubuntu-latest
+    concurrency: staging
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.0
+
+      - name: "Deploy staging"
+        run: |
+          echo "Prettend deploy to STAGING"
+
+  deploy_production:
+    if: github.ref == 'refs/heads/main'
+    needs: [build_and_test]
+    runs-on: ubuntu-latest
+    concurrency: production
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.0
+
+      - name: "Deploy production"
+        run: |
+          echo "Prettend deploy to PRODUCTION"
