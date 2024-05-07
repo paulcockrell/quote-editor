@@ -1,8 +1,4 @@
-on:
-  workflow_call:
-  pull_request:
-    branches:
-      - "*"
+on: [workflow_call, pull_request]
 
 jobs:
   build_and_test:
