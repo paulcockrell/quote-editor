@@ -1,4 +1,4 @@
-name: Merge branch to test on labeled     merge-branch-to-test-on-labeled.yml
+name: Merge branch to test on labeled
 
 on:
   pull_request:
