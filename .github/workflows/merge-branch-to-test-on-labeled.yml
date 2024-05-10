@@ -1,27 +1,27 @@
 name: Merge branch to test on labeled     merge-branch-to-test-on-labeled.yml
 
 on:
-│ pull_request:
-│ │ types: 
+  pull_request:
+    types:
       - labeled
 
 jobs:
-│ merge_branch:
-│ │ if: |
-│ │ │ github.event.review.state == 'approved' &&
-│ │ │ github.event.label.name == 'merge to test branch'
-│ │
-│ │ runs-on: ubuntu-latest
-│ │
-│ │ steps:
-│ │ │ - uses: actions/checkout@v2
-│ │ │ │ with:
-│ │ │ │ │ fetch-depth: '0'
-│ │ │
-│ │ │ - name: Merge to test
-│ │ │ │ id: merge_by_label
-│ │ │ │ uses: devmasx/merge-branch@master
-│ │ │ │ with:
-│ │ │ │ │ label_name: 'merge to test branch'
-│ │ │ │ │ target_branch: 'test'
-│ │ │ │ │ github_token: ${{ secrets.GH_PAT }}
+  merge_branch:
+    if: |
+      github.event.review.state == 'approved' &&
+      github.event.label.name == 'merge to test branch'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+
+      - name: Merge to test
+        id: merge_by_label
+        uses: devmasx/merge-branch@master
+        with:
+          label_name: "merge to test branch"
+          target_branch: "test"
+          github_token: ${{ secrets.GH_PAT }}
