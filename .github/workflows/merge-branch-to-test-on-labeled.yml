@@ -7,8 +7,8 @@ on:
 
 jobs:
   merge_branch:
-    if: |
-      github.event.review.state == 'approved' &&
+    if: >-
+      github.event.review.state == 'APPROVED' &&
       github.event.label.name == 'merge to test branch'
 
     runs-on: ubuntu-latest
