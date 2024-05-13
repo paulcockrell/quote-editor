@@ -10,10 +10,6 @@ on:
 
 jobs:
   merge_by_labled:
-    if: |
-      # github.event.review.state == 'APPROVED' &&
-      # github.event.label.name == 'merge to test branch'
-
     runs-on: ubuntu-latest
 
     steps:
