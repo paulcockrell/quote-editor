@@ -12,9 +12,6 @@ jobs:
   merge_pr_to_test:
     if: github.event.review.state == 'APPROVED'
 
-    needs:
-      - build_and_test
-
     runs-on: ubuntu-latest
 
     steps:
