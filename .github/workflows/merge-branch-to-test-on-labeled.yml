@@ -10,7 +10,7 @@ on:
 
 jobs:
   merge_branch:
-    if: ${{ (github.event.review.state == 'approved') && (contains(github.event.pull_requests.labels.*.name, 'merge to test branch')) }}
+    if: ${{ (github.event.review.state == 'approved') && (github.event.label.name == 'merge to test branch') }}
 
     runs-on: ubuntu-latest
 
