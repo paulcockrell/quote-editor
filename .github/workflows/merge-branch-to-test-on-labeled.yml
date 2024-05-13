@@ -9,8 +9,8 @@ on:
       - submitted
 
 jobs:
-  merge_pr_to_test:
-    if: github.event.review.state == 'APPROVED'
+  merge_by_labled:
+    if: github.event.review.state == 'APPROVED' && contains(github.event.pull_request.labels.*.name, 'merge to test branch')
 
     runs-on: ubuntu-latest
 
@@ -20,8 +20,9 @@ jobs:
       - name: Merge PR to test by label
         uses: devmasx/merge-branch@master
         with:
-          label_name: 'merge to test branch'
-          target_branch: 'test'
+          type: now
+          target_branch: "test"
+          message: Merge PR into test
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Opening pull request
@@ -31,4 +32,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FROM_BRANCH: ${{ github.head_ref }}
-          TO_BRANCH: 'test'
+          TO_BRANCH: "test"
