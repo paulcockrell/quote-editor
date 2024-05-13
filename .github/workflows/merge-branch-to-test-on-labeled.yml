@@ -10,7 +10,9 @@ on:
 
 jobs:
   merge_by_labled:
-    if: github.event.review.state == 'APPROVED' && contains(github.event.pull_request.labels.*.name, 'merge to test branch')
+    if: |
+      github.event.review.state == 'APPROVED' &&
+      github.event.label.name == 'merge to test branch'
 
     runs-on: ubuntu-latest
 
