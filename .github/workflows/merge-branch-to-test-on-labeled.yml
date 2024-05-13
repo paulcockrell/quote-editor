@@ -19,8 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Inspect
+      - name: Inspect review state
         run: echo ${{ github.event.review.state}}
+      - name: Inspect label
         run: echo ${{ github.event.label.name }}
 
       - name: Merge PR to test by label
