@@ -10,6 +10,8 @@ on:
 
 jobs:
   merge_branch:
+    if: github.event.review.state == 'APPROVED'
+
     runs-on: ubuntu-latest
 
     steps:
