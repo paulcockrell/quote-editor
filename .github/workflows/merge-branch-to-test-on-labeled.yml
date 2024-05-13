@@ -9,12 +9,28 @@ on:
       - submitted
 
 jobs:
+  checkReviews:
+    runs-on: ubuntu-latest
+    outputs:
+      reviews: ${{ steps.reviews.outputs.state }}
+    steps:
+      - id: reviews
+        env:
+          pr: ${{ github.event.number }}
+        run: |
+          state=$(gh pr view "$pr" \
+              --repo "$GITHUB_REPOSITORY" 
+              --json reviewDecision \
+              --jq '.reviewDecision')
+          echo "state=$state" >> "$GITHUB_OUTPUT"
+
   merge_by_labled:
-    if: |
-      github.event.review.state == 'approved' &&
-      github.event.label.name == 'merge to test branch'
 
     runs-on: ubuntu-latest
+
+    needs: checkReviews
+
+    if: needs.checkReviews.event.review.state == 'APPROVED'
 
     steps:
       - uses: actions/checkout@master
