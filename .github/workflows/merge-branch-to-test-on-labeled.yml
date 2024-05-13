@@ -11,13 +11,17 @@ on:
 jobs:
   merge_by_labled:
     if: |
-      github.event.review.state == 'APPROVED' &&
-      github.event.label.name == 'merge to test branch'
+      # github.event.review.state == 'APPROVED' &&
+      # github.event.label.name == 'merge to test branch'
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@master
+
+      - name: Inspect
+        run: echo ${{ github.event.review.state}}
+        run: echo ${{ github.event.label.name }}
 
       - name: Merge PR to test by label
         uses: devmasx/merge-branch@master
