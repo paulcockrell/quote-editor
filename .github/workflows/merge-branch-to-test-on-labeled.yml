@@ -9,7 +9,7 @@ on:
       - submitted
 
 jobs:
-  merge_branch:
+  merge_pr_to_test:
     if: github.event.review.state == 'APPROVED'
 
     runs-on: ubuntu-latest
@@ -20,6 +20,6 @@ jobs:
       - name: Merge PR to test by label
         uses: devmasx/merge-branch@master
         with:
-          label_name: merge to test branch
-          target_branch: test
+          label_name: 'merge to test branch'
+          target_branch: 'test'
           github_token: ${{ secrets.GITHUB_TOKEN }}
