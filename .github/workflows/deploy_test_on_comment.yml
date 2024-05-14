@@ -43,6 +43,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
+    needs:
+      - merge_to_test
+
     uses: ./.github/workflows/deploy_test.yml
 
   deploy_status:
