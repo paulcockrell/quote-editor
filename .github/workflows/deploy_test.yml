@@ -1,13 +1,10 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - test
+on: 
+  - workflow_call
 
 jobs:
   build_and_test:
-    #uses: ./.github/workflows/build_and_test.yml@test
     uses: ./.github/workflows/build_and_test.yml
 
   deploy_dev:
