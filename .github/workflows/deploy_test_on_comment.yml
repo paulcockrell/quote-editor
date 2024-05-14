@@ -1,4 +1,4 @@
-name: "Deploy test on comment"
+name: "Deploy test"
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
 on:
@@ -43,6 +43,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
+    needs:
+      - merge_to_test
+
     uses: ./.github/workflows/deploy_test.yml
 
   deploy_status:
@@ -58,7 +61,6 @@ jobs:
     steps:
       - name: Add workflow result as comment on PR
         uses: actions/github-script@v6
-        if: always()
         with:
           script: |
             const name = '${{ github.workflow	}}';
@@ -73,9 +75,12 @@ jobs:
               body: body
             })
 
+      - name: Get branch of PR
+        uses: xt0rted/pull-request-comment-branch@v1
+        id: comment-branch
+
       - name: Set latest commit status as ${{ job.status }}
         uses: myrotvorets/set-commit-status-action@master
-        if: always()
         with:
           sha: ${{ steps.comment-branch.outputs.head_sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
