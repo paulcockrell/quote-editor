@@ -17,8 +17,8 @@ jobs:
           reaction: rocket
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-      - run: 'echo Found it!'
-        if: steps.check.outputs.triggered == 'true'
+      - run: exit 1
+        if: steps.check.outputs.triggered == 'false'
 
   merge-branch:
     runs-on: ubuntu-latest
@@ -27,12 +27,12 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Merge staging -> uat
+      - name: Merge PR -> test
         uses: devmasx/merge-branch@master
         with:
           type: now
-          target_branch: uat
-          message: Merge staging into uat
+          target_branch: test
+          message: Merge branch into test
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
 
