@@ -1,4 +1,4 @@
-name: "Deploy test"
+name: "Deploy on comment"
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
 on:
@@ -59,7 +59,7 @@ jobs:
 
     # Only run this job if deploy ran (regardless of being successful or not).
     # If deploy job never runs, then this job will not execute
-    if: success() || steps.deploy.conclusion == 'failure'
+    if: success() || needs.deploy.conclusion == 'failure'
 
     steps:
       - name: Add workflow result as comment on PR
