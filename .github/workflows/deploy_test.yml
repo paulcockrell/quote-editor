@@ -1,7 +1,9 @@
 name: Deploy test
 
-on: 
-  - workflow_call
+on:
+  push:
+    branches:
+      - test
 
 jobs:
   build_and_test:
@@ -38,7 +40,7 @@ jobs:
   deploy_staging:
     name: Deploy
 
-    needs: 
+    needs:
       - build_and_test
 
     runs-on: ubuntu-latest
